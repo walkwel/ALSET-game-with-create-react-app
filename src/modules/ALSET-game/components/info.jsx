@@ -14,25 +14,13 @@ class Info extends Component {
     super(props);
   }
 
-  getWrapperStyles() {
-    return {
-      position: 'absolute',
-      left: '35%',
-      transform: 'translate(0px, 0px) translateZ(0)',
-      transformOrigin: 'top left',
-      fontSize: '35px',
-      fontWeight: 'bold',
-      color: '#fff',
-    };
-  }
-
   render() {
     var textInfo = '';
     if (this.props.gameId == 0) textInfo = 'Player vs Player';
     else if (this.props.gameId == 1) textInfo = 'Player vs Bot';
     else if (this.props.gameId == 2) textInfo = 'Bot vs Bot';
     else textInfo = 'Bot vs Custom';
-    return <div style={this.getWrapperStyles()}>{textInfo}</div>;
+    return <div className='info-wraper'>{textInfo}</div>;
   }
 }
 export default observer(Info);

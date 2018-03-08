@@ -17,7 +17,9 @@ class Character extends Component {
   };
   constructor(props, context) {
     super(props);
-    this.getWrapperStyles = this.getWrapperStyles.bind(this);
+    this.x=0;
+    this.y=0;
+    this.controlChractors = this.controlChractors.bind(this);
     this.update = this.update.bind(this);
     this.moveLeft = this.moveLeft.bind(this);
     this.moveRight = this.moveRight.bind(this);
@@ -31,14 +33,9 @@ class Character extends Component {
     if (this.props.keys) this.charPhysicSize = 64;
     else this.charPhysicSize = 12;
   }
-  getWrapperStyles() {
-    var x = this.props.store.characterPosition[this.props.index].x;
-    var y = this.props.store.characterPosition[this.props.index].y;
-    return {
-      position: 'absolute',
-      transform: 'translate(' + x * this.context.scale + 'px, ' + y * this.context.scale + 'px) translateZ(0)',
-      transformOrigin: 'top left',
-    };
+  controlChractors() {
+    this.x = this.props.store.characterPosition[this.props.index].x;
+    this.y = this.props.store.characterPosition[this.props.index].y;
   }
   update = () => {
     if (this.props.store.mode === 'restart') {
@@ -58,7 +55,6 @@ class Character extends Component {
       else if (this.props.keys.isDown(this.props.keys.DOWN) || this.props.keys.isDown(75)) newState = 10;
       if (newState) this.props.store.characterState[this.props.index] = newState;
     }
-    //this.characterState = this.props.store.characterState[this.props.index];
     this.setState((prevState, props) => {
       if (prevState.characterState !== this.props.store.characterState[this.props.index])
         return {
@@ -76,7 +72,6 @@ class Character extends Component {
   moveRight() {
     const position = this.props.store.characterPosition[this.props.index];
     if (this.props.store.checkIfObjectInsideTheScreen(this.props.index, 'right', this.props.gameId))
-      //if(position.x<=(700-110))
       Matter.Body.setVelocity(this.body1.body, {
         x: this.props.store.config.speed,
         y: 0,
@@ -88,7 +83,6 @@ class Character extends Component {
   moveLeft() {
     const position = this.props.store.characterPosition[this.props.index];
     if (this.props.store.checkIfObjectInsideTheScreen(this.props.index, 'left', this.props.gameId))
-      //if(position.x>=0)
       Matter.Body.setVelocity(this.body1.body, {
         x: -this.props.store.config.speed,
         y: 0,
@@ -100,7 +94,6 @@ class Character extends Component {
   moveUp() {
     const position = this.props.store.characterPosition[this.props.index];
     if (this.props.store.checkIfObjectInsideTheScreen(this.props.index, 'top', this.props.gameId))
-      //if(position.y>=0)
       Matter.Body.setVelocity(this.body1.body, {
         x: 0,
         y: -this.props.store.config.speed,
@@ -112,7 +105,6 @@ class Character extends Component {
   moveDown() {
     const position = this.props.store.characterPosition[this.props.index];
     if (this.props.store.checkIfObjectInsideTheScreen(this.props.index, 'bottom', this.props.gameId))
-      //if(position.y<=700-128)
       Matter.Body.setVelocity(this.body1.body, {
         x: 0,
         y: this.props.store.config.speed,
@@ -128,10 +120,18 @@ class Character extends Component {
   componentWillUnmount() {
     Matter.Events.off(this.context.engine, 'afterUpdate', this.update);
   }
-
+  componentWillReceiveProps(){
+    this.controlChractors();
+  }
   render() {
+    this.controlChractors();
     return (
-      <div id={'character-' + this.props.index + '-' + this.props.gameId} style={this.getWrapperStyles()}>
+      <div id={`character-${this.props.index}-${this.props.gameId}`}
+      style={{
+        position: 'absolute',
+        transform: `translate(${this.x * this.context.scale}px, ${this.y * this.context.scale}px) translateZ(0)`,
+        transformOrigin: 'top left',
+      }}>
         <Body
           args={[
             this.props.store.characterPosition[this.props.index].x,

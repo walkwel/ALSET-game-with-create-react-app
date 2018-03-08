@@ -14,7 +14,7 @@ class WinLoseScreen extends Component {
   constructor(props) {
     super(props);
     this.winText = '';
-    this.getWrapperStyles = this.getWrapperStyles.bind(this);
+    this.getWrapperStyles = this.checkScore.bind(this);
     this.update = this.update.bind(this);
     this.gatherToWin = this.props.store.config.gatherToWin;
   }
@@ -33,31 +33,26 @@ class WinLoseScreen extends Component {
     Matter.Events.off(this.context.engine, 'afterUpdate', this.update);
   }
 
-  getWrapperStyles() {
-    var display = 'none';
+  checkScore() {
     if (this.props.store.score[0] >= this.gatherToWin) {
-      display = 'block';
       this.winText = 'Player 1 Wins!!!';
-    } else if (this.props.store.score[1] >= this.gatherToWin) {
-      display = 'block';
+      return true;
+    }else if (this.props.store.score[1] >= this.gatherToWin) {
       this.winText = 'Player 2 Wins!!!';
+      return true;
+    }else{
+      return false;
     }
-    return {
-      position: 'absolute',
-      left: '0',
-      top: '0',
-      width: '100%',
-      height: '100%',
-      background: '#4CAF50',
-      display: display,
-    };
   }
 
   render() {
+    const isDisplay = this.checkScore();
     return (
-      <div id="Hello" style={this.getWrapperStyles()}>
+      <div>
+      { isDisplay &&
+        <div className='winLose-wrapper'>
         <h1 style={{ textAlign: 'center', marginTop: '20%', color: '#fff' }}>{this.winText}</h1>
-        <button
+        <button className='winLose-screen'
           onClick={() => {
             this.props.store.mode = 'restart';
             this.props.store.score = [0, 0];
@@ -65,22 +60,13 @@ class WinLoseScreen extends Component {
               this.props.store.mode = 'play';
             }, 1000);
           }}
-          style={{
-            width: '30%',
-            marginLeft: '35%',
-            height: '10%',
-            background: 'none',
-            border: '4px solid #fff',
-            borderRadius: '15px',
-            textAlign: 'center',
-            color: '#fff',
-            fontSize: '25px',
-            textTransform: 'uppercase',
-          }}
         >
           Restart Game
         </button>
       </div>
+      }
+      </div>
+      
     );
   }
 }

@@ -22,11 +22,12 @@ import GameStore4 from './store/game-store4.jsx';
 //import images
 import CharacterBlonde from './assets/character-blonde.png';
 import CharacterBrunette from './assets/character-brunette.png';
+import './style.css'
 
 class Game extends Component {
   constructor(props) {
     super(props);
-    var GameStore;
+    let GameStore;
     if (this.props.gameId === 0) GameStore = GameStore1;
     else if (this.props.gameId === 1) GameStore = GameStore2;
     else if (this.props.gameId === 2) GameStore = GameStore3;
@@ -53,7 +54,7 @@ class Game extends Component {
     if (this.keyListener2) this.keyListener2.unsubscribe();
   }
   render() {
-    var GameStore;
+    let GameStore;
     if (this.props.gameId === 0) GameStore = GameStore1;
     else if (this.props.gameId === 1) GameStore = GameStore2;
     else if (this.props.gameId === 2) GameStore = GameStore3;
@@ -61,7 +62,7 @@ class Game extends Component {
     if (this.props.config) GameStore.config = this.props.config;
     return (
       <Loop>
-        <Stage style={{ background: '#3a9bdc' }}>
+        <Stage className='index-bg-color'>
           <World
             onUpdate={this.updateHandler}
             onInit={this.physicsInit}
@@ -105,18 +106,20 @@ class Game extends Component {
   physicsInit(engine) {}
   colissionHandler(engine) {}
   updateHandler(engine) {
-    var GameStore;
+    let player1Direction;
+    let player2Direction;
+    let GameStore;
     if (this.props.gameId === 0) GameStore = GameStore1;
     else if (this.props.gameId === 1) GameStore = GameStore2;
     else if (this.props.gameId === 2) GameStore = GameStore3;
     else if (this.props.gameId === 3) GameStore = GameStore4;
     if (GameStore.mode === 'pause') return;
-    var WorldData = {
+    let WorldData = {
       players: GameStore.characterPosition,
       stones: GameStore.stonesData,
     };
-    if (this.props.player1) var player1Direction = this.props.player1(WorldData);
-    if (this.props.player2) var player2Direction = this.props.player2(WorldData);
+    if (this.props.player1)  player1Direction = this.props.player1(WorldData);
+    if (this.props.player2)  player2Direction = this.props.player2(WorldData);
     if (player1Direction) {
       if (player1Direction.left) GameStore.characterState[0] = 9;
       else if (player1Direction.right) GameStore.characterState[0] = 11;

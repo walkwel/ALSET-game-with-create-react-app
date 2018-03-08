@@ -5,17 +5,10 @@ export default class Background extends Component {
   constructor(props) {
     super(props);
   }
-  getWrapperStyles() {
-    return {
-      position: 'absolute',
-      transform: `translate(0px, 0px) translateZ(0)`,
-      transformOrigin: 'top left',
-    };
-  }
 
   render() {
     return (
-      <div style={this.getWrapperStyles()}>
+      <div className='background-Wrapper'>
         <TileMap
           style={{ top: 0 }}
           tileSize={145}

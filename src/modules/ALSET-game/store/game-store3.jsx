@@ -21,15 +21,15 @@ class GameStore {
   }
 
   createNewStones() {
-    var newTimestamp = Date.now();
+    let newTimestamp = Date.now();
     if (newTimestamp - this.timeStampData >= 5000) {
       this.timeStampData = Date.now();
       if (this.stonesData.length === 0) {
-        var stonesQuant = Math.floor(
+        let stonesQuant = Math.floor(
           Math.random() * (this.config.maxGems - this.config.minGems + 1) + this.config.minGems,
         );
-        for (var i = 0; i < stonesQuant; i++) {
-          var stoneObj = { x: 0, y: 0 };
+        for (let i = 0; i < stonesQuant; i++) {
+          let stoneObj = { x: 0, y: 0 };
           stoneObj.x = Math.floor(Math.random() * (8 - 0 + 1) + 0) * 100;
           stoneObj.y = Math.floor(Math.random() * (4 - 0 + 1) + 0) * 100;
           this.stonesData.push(stoneObj);
@@ -39,20 +39,20 @@ class GameStore {
   }
 
   checkIfObjectInsideTheScreen(charKey, direction, gameId) {
-    var el = document.getElementById('character-' + charKey + '-' + gameId);
-    var parentEl = el.parentElement;
+    let el = document.getElementById('character-' + charKey + '-' + gameId);
+    let parentEl = el.parentElement;
     el = document.getElementById('character-' + charKey + '-' + gameId).childNodes[0];
-    var parentOffset = parentEl.getBoundingClientRect();
-    var viewportOffset = el.getBoundingClientRect();
-    var top = viewportOffset.top;
-    var left = viewportOffset.left;
-    var right = viewportOffset.right;
-    var bottom = viewportOffset.bottom;
+    let parentOffset = parentEl.getBoundingClientRect();
+    let viewportOffset = el.getBoundingClientRect();
+    let top = viewportOffset.top;
+    let left = viewportOffset.left;
+    let right = viewportOffset.right;
+    let bottom = viewportOffset.bottom;
 
-    var parentTop = parentOffset.top;
-    var parentLeft = parentOffset.left;
-    var parentRight = parentOffset.right;
-    var parentBottom = parentOffset.bottom;
+    let parentTop = parentOffset.top;
+    let parentLeft = parentOffset.left;
+    let parentRight = parentOffset.right;
+    let parentBottom = parentOffset.bottom;
     if (direction === 'left') return left <= parentLeft ? false : true;
     else if (direction === 'right') return right >= parentRight ? false : true;
     else if (direction === 'top') return top <= parentTop ? false : true;

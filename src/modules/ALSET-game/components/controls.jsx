@@ -14,35 +14,9 @@ class Controls extends Component {
     super(props);
   }
 
-  getWrapperStyles() {
-    return {
-      position: 'absolute',
-      left: '35%',
-      bottom: '10px',
-      transform: 'translate(0px, 0px) translateZ(0)',
-      transformOrigin: 'top left',
-      fontSize: '20px',
-      fontWeight: 'bold',
-      color: '#fff',
-    };
-  }
-
-  getControlStyles() {
-    return {
-      display: 'inline',
-      border: '1px solid',
-      borderRadius: '10px',
-      textAlign: 'center',
-      cursor: 'pointer',
-      marginLeft: '10px',
-      textTransform: 'uppercase',
-      padding: '5px',
-    };
-  }
-
   render() {
     return (
-      <div style={this.getWrapperStyles()}>
+      <div className='controls-wraper'>
         <div
           onClick={() => {
             this.props.store.mode = 'restart';
@@ -51,7 +25,7 @@ class Controls extends Component {
               this.props.store.mode = 'play';
             }, 1000);
           }}
-          style={this.getControlStyles()}
+         className='controls-wraper-child'
         >
           {'restart'}
         </div>
@@ -60,7 +34,7 @@ class Controls extends Component {
             onClick={() => {
               this.props.store.mode = 'pause';
             }}
-            style={this.getControlStyles()}
+            className='controls-wraper-child'
           >
             {'pause'}
           </div>
@@ -69,7 +43,7 @@ class Controls extends Component {
             onClick={() => {
               this.props.store.mode = 'play';
             }}
-            style={this.getControlStyles()}
+            className='controls-wraper-child'
           >
             {'resume'}
           </div>

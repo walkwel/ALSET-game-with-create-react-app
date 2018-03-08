@@ -18,23 +18,10 @@ class Score extends Component {
     super(props);
   }
 
-  getWrapperStyles() {
-    return {
-      position: 'absolute',
-      left: this.props.left,
-      right: this.props.right,
-      transform: 'translate(0px, 0px) translateZ(0)',
-      transformOrigin: 'top left',
-      fontSize: '35px',
-      fontWeight: 'bold',
-      color: '#fff',
-    };
-  }
-
   render() {
-    var playerNum = this.props.playerId + 1;
+    let playerNum = this.props.playerId + 1;
     return (
-      <div style={this.getWrapperStyles()}>
+      <div className='score-wraper' style={{left: this.props.left, right: this.props.right}}>
         {'Player ' + playerNum + ': ' + this.props.store.score[this.props.playerId]}
       </div>
     );
